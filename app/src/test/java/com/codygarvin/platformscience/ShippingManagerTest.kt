@@ -1,9 +1,9 @@
 package com.codygarvin.platformscience
 
+import com.codygarvin.platformscience.shipping_management.ShippingManager
 import org.junit.After
 import org.junit.Test
 
-import org.junit.Assert.*
 import org.junit.Before
 
 class ShippingManagerTest {

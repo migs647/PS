@@ -9,6 +9,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.codygarvin.platformscience.shipping_management.Route
+import com.codygarvin.platformscience.shipping_management.ShippingManager
 
 class MainActivity : AppCompatActivity() {
 

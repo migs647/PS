@@ -1,6 +1,6 @@
-package com.codygarvin.platformscience
+package com.codygarvin.platformscience.shipping_management
 
-import java.util.*
+import com.codygarvin.platformscience.isEven
 
 class ShippingManager {
 
@@ -16,7 +16,8 @@ class ShippingManager {
         Driver("Noemie Murphy"),
         Driver("Cleve Durgan"),
         Driver("Murphy Mosciski"),
-        Driver("Kaiser Sose"))
+        Driver("Kaiser Sose")
+    )
 
     private var shippingAddresses = listOf<ShippingAddress>(
         ShippingAddress("215 Osinski Manors"),
@@ -28,7 +29,8 @@ class ShippingManager {
         ShippingAddress("1797 Adolf Island Apt. 744"),
         ShippingAddress("2431 Lindgren Corners"),
         ShippingAddress("8725 Aufderhar River Suite 859"),
-        ShippingAddress("79035 Shanna Light Apt. 322"))
+        ShippingAddress("79035 Shanna Light Apt. 322")
+    )
 
     /**
      * Parse a number of drivers and addresses in order to find a match between the two.

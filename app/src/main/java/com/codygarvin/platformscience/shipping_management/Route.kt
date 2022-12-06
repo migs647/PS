@@ -1,4 +1,4 @@
-package com.codygarvin.platformscience
+package com.codygarvin.platformscience.shipping_management
 
 class Route(val driver: Driver, val address: ShippingAddress) {
     fun goToRoute() {

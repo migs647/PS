@@ -1,5 +1,7 @@
-package com.codygarvin.platformscience
+package com.codygarvin.platformscience.shipping_management
 
+import com.codygarvin.platformscience.removeEndAddress
+import com.codygarvin.platformscience.removeFrontAddress
 import java.util.*
 
 data class ShippingAddress(val address: String) {
