@@ -14,13 +14,17 @@ import com.codygarvin.platformscience.shipping_management.ShippingManager
 
 class MainActivity : AppCompatActivity() {
 
-    private val shippingManager = ShippingManager()
+    private var shippingManager: ShippingManager? = null
     private lateinit var addressesRecyclerView: RecyclerView
     private var adapter: AddressDriverAdapter? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Setup the shipping manager with the context now that we have it
+        shippingManager = ShippingManager(applicationContext)
 
         // Setup Recycler View
         setupRecycler()
@@ -43,6 +47,7 @@ class MainActivity : AppCompatActivity() {
 
     fun calculateScore(view: View) {
         // Build out the driver index (this should probably be done on a background thread)
+        val shippingManager = shippingManager ?: return
         shippingManager.buildDriverIndex()
 
         val routes = shippingManager.filledAddresses ?: return

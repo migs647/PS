@@ -1,36 +1,29 @@
 package com.codygarvin.platformscience.shipping_management
 
+import android.content.Context
+import android.util.Log
+import com.codygarvin.platformscience.Utils
 import com.codygarvin.platformscience.isEven
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
-class ShippingManager {
+
+class ShippingManager(private val appContext: Context?) {
 
     var filledAddresses: List<Route>? = null
 
-    private var availableDrivers = mutableListOf<Driver>(
-        Driver("Everardo Welch"),
-        Driver("Orval Mayert"),
-        Driver("Howard Emmerich"),
-        Driver("Izaiah Lowe"),
-        Driver("Monica Hermann"),
-        Driver("Ellis Wisozk"),
-        Driver("Noemie Murphy"),
-        Driver("Cleve Durgan"),
-        Driver("Murphy Mosciski"),
-        Driver("Kaiser Sose")
-    )
+    internal var availableDrivers = mutableListOf<Driver>()
 
-    private var shippingAddresses = listOf<ShippingAddress>(
-        ShippingAddress("215 Osinski Manors"),
-        ShippingAddress("9856 Marvin Stravenue"),
-        ShippingAddress("7127 Kathlyn Ferry"),
-        ShippingAddress("987 Champlin Lake"),
-        ShippingAddress("63187 Volkman Garden Suite 447"),
-        ShippingAddress("75855 Dessie Lights"),
-        ShippingAddress("1797 Adolf Island Apt. 744"),
-        ShippingAddress("2431 Lindgren Corners"),
-        ShippingAddress("8725 Aufderhar River Suite 859"),
-        ShippingAddress("79035 Shanna Light Apt. 322")
-    )
+    internal var shippingAddresses = listOf<ShippingAddress>()
+
+    init {
+        // Fetch JSON
+        try {
+            fetchJson()
+        } catch (exception: Exception) {
+            print("Exception: {${exception.toString()}")
+        }
+    }
 
     /**
      * Parse a number of drivers and addresses in order to find a match between the two.
@@ -147,5 +140,31 @@ class ShippingManager {
             return driverLength
         }
         return greatestCommonDenominator(streetLength, driverLength % streetLength)
+    }
+
+    /**
+     * Note: Probably a good idea to make sure this is on a background thread
+     */
+    private fun fetchJson() {
+        val appContext = appContext ?: return // probably good idea to throw an error here
+        val jsonFileString = Utils.getJsonFromAssets(appContext, "shipment_driver_data.json") ?: return
+        val gson = Gson()
+        var rawRouteModel = gson.fromJson(jsonFileString.toString(), RawRoute::class.java)
+        parseRawRoute(rawRouteModel)
+
+    }
+
+    private fun parseRawRoute(rawRoute: RawRoute) {
+        val tempShipments = mutableListOf<ShippingAddress>()
+        for (address in rawRoute.shipments) {
+            tempShipments.add(ShippingAddress(address))
+        }
+        shippingAddresses = tempShipments
+
+        val tempDrivers = mutableListOf<Driver>()
+        for (driver in rawRoute.drivers) {
+            tempDrivers.add(Driver(driver))
+        }
+        availableDrivers = tempDrivers
     }
 }
